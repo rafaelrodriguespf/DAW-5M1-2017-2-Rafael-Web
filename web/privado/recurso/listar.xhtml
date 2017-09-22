@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+   
+        
+        
+         <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titulo">Listagem de Recursos</ui:define>
+        <ui:define name="conteudo">
+            
+             <h:form>
+            
+            <p:growl/>
+            <p:commandButton value="Novo" icon="ui-icon-plus"
+                             action="#{controleRecurso.novo()}" ajax="false"/>
+            <p:dataTable value="#{controleRecurso.dao.lista}" var="obj">
+              
+                <p:column headerText="ID">
+                    <p:outputLabel value="#{obj.id}"/>
+                </p:column>
+               
+                <p:column headerText="Descrição">
+                    <p:outputLabel value="#{obj.descricao}"/>
+                </p:column>
+          
+                <p:column headerText="Ações">
+                    <div align="center">
+                        <p:commandButton icon="ui-icon-pencil"
+                                         action="#{controleRecurso.editar(obj.id)}"
+                                         title="Editar" ajax="false"/>
+                        <p:commandButton icon="ui-icon-trash" title="Remover"
+                                         action="#{controleRecurso.remover(obj.id)}"
+                                         update="@form" process="@form"
+                                         onclick="if (!confirm('Confirma a exclusão?')) return false"/>
+                    </div>
+                </p:column>
+            </p:dataTable>
+            
+            
+             </h:form>
+        </ui:define>
+    </ui:composition>
+          
+</html>
+

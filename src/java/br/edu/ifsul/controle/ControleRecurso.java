@@ -1,8 +1,11 @@
 package br.edu.ifsul.controle;
+
+
 import br.edu.ifsul.dao.RecursoDAO;
 import br.edu.ifsul.modelo.Recurso;
 import br.edu.ifsul.util.Util;
 import java.io.Serializable;
+import java.util.HashMap;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -16,19 +19,24 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class ControleRecurso implements Serializable {
 
-    private RecursoDAO dao;
+    private RecursoDAO<Recurso> dao;
     private Recurso objeto;
+ 
+    
     
     public ControleRecurso(){
-        dao = new RecursoDAO();
+        dao = new RecursoDAO<>();
+      
     }
+    
+  
     
     public String listar(){
         return "/privado/recurso/listar?faces-redirect=true";
     }
     
     public String novo(){
-        objeto = new Recurso();
+        setObjeto(new Recurso());
         return "formulario?faces-redirect=true";
     }
     
@@ -37,7 +45,13 @@ public class ControleRecurso implements Serializable {
     }
     
     public String salvar(){
-        if(dao.salvar(objeto)){
+        boolean persistiu;
+        if (objeto.getId() == null){
+            persistiu = dao.persist(objeto);
+        } else{
+            persistiu = dao.merge(objeto);
+        }
+        if(persistiu){
             Util.mensagemInformacao(dao.getMensagem());
             return "listar?faces-redirect=true";
         } else {
@@ -56,7 +70,7 @@ public class ControleRecurso implements Serializable {
     }
     
     public void remover(Integer id){
-        objeto = dao.localizar(id);
+         objeto = dao.localizar(id);
         if (dao.remover(objeto)){
             Util.mensagemInformacao(dao.getMensagem());
         } else {
@@ -79,4 +93,8 @@ public class ControleRecurso implements Serializable {
     public void setObjeto(Recurso objeto) {
         this.objeto = objeto;
     }
+
+  
+
+ 
 }

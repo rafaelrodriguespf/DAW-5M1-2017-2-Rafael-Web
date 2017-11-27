@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="unidadeCondominial" pageWidth="550" pageHeight="842" columnWidth="550" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="dfb75d03-859c-4113-b6dd-e464f768360a">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<style name="zebra">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean ($V{REPORT_COUNT} %2 ==0)]]></conditionExpression>
+			<style backcolor="#C4C4C4"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="area" class="java.lang.Double">
+		<fieldDescription><![CDATA[area]]></fieldDescription>
+	</field>
+	<field name="pessoa" class="br.edu.ifsul.modelo.Pessoa">
+		<fieldDescription><![CDATA[pessoa]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[numero]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="numeroQuarto" class="java.lang.Integer">
+		<fieldDescription><![CDATA[numeroQuarto]]></fieldDescription>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<fieldDescription><![CDATA[descricao]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="30" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="30" uuid="1313c4df-34d6-4846-b10d-e6568e5d102e"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="30" uuid="71c1bfc4-9686-4af6-8a68-1e1bdad0cb60"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Unidades Condominiais]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="80" splitType="Stretch">
+			<rectangle>
+				<reportElement style="zebra" x="0" y="0" width="555" height="80" uuid="8f4ebfcb-8abf-4f4c-978d-e427c3dfae48"/>
+			</rectangle>
+			<textField>
+				<reportElement x="30" y="0" width="50" height="30" uuid="407b02cb-d7ae-4889-a026-4c330a6ee20e"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="0" width="20" height="30" uuid="c10d8569-975d-43a2-a9b6-5e1325a5cc6e"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ID:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="130" y="0" width="70" height="30" uuid="f3d552ed-2945-4e15-857c-d59ad5283661"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="80" y="0" width="50" height="30" uuid="b36613c2-04f3-477d-9b4d-5e21223a3303"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Número:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="260" y="0" width="130" height="30" uuid="563124d4-f034-4952-9bd7-b9d38f7421d7"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pessoa}.getNome()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="200" y="0" width="60" height="30" uuid="3ab03288-e6f6-4b67-bb59-baed480a8a6e"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Proprietário]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="490" y="0" width="64" height="30" uuid="41d40118-dcc1-4c78-ad50-4a51ee760ca1"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{numeroQuarto}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="390" y="0" width="100" height="30" uuid="6145f040-f90b-45b3-8029-6d0fad1c1885"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Número de Quartos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="30" width="445" height="30" uuid="66e2dca8-207a-40e6-be79-8c05bb45ee42"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="30" width="100" height="30" uuid="2c60f5ec-6c15-4980-b0fb-9d56a6a2dc5a"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<text><![CDATA[Descricao:]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorioCondominios_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bdf75fd0-6d9b-47cf-8b4e-eb48ed5d7780">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="DadosCondominios"/>
+	<style name="zebra">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean ($V{REPORT_COUNT} %2 ==0)]]></conditionExpression>
+			<style backcolor="#C4C4C4"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="endereco" class="java.lang.String">
+		<fieldDescription><![CDATA[endereco]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[numero]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[nome]]></fieldDescription>
+	</field>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="cep" class="java.lang.String">
+		<fieldDescription><![CDATA[cep]]></fieldDescription>
+	</field>
+	<field name="unidadeCondominial" class="java.util.List">
+		<fieldDescription><![CDATA[unidadeCondominial]]></fieldDescription>
+	</field>
+	<field name="condominio_recurso" class="java.util.List">
+		<fieldDescription><![CDATA[condominio_recurso]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="81" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="81" backcolor="#CFFBFC" uuid="0c34abca-8453-4e48-a31e-546fcc6f4c58"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="79" uuid="68252ecb-2faa-455a-8994-e8d25ea907e2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Relatório Condominios]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="30" backcolor="#96B9FF" uuid="a2f72a9e-9ca8-4267-a64e-5d07599f8a5f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="10" y="0" width="50" height="30" uuid="1f451e6e-ff37-403d-bfd6-8685753b9fa8"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="0" width="100" height="30" uuid="62a8970c-16c2-4e73-83ec-a2cb5a6217eb"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="0" width="170" height="30" uuid="e2bc013f-403a-483b-84fd-6b12448b0509"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Endereço]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="0" width="70" height="30" uuid="539f4f65-622a-42f4-a935-0709a71bfcde"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Número]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="0" width="75" height="30" uuid="43f4e30a-d4d6-4917-95b0-ce5aa87f4046"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[CEP]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="90" splitType="Stretch">
+			<rectangle>
+				<reportElement style="zebra" x="0" y="0" width="555" height="30" uuid="317665de-f30e-4a35-8b36-229724f7508e"/>
+			</rectangle>
+			<textField>
+				<reportElement x="10" y="0" width="50" height="30" uuid="e9a313a3-7c55-4f84-8dc1-9d7bc91e678a"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="0" width="170" height="30" uuid="46b1c5ac-8902-42df-8c42-89a0bc1fff77"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="0" width="170" height="30" uuid="3bd22698-958b-4f2d-9c0a-187dd5ec7285"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{endereco}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="410" y="0" width="70" height="30" uuid="f816bc6e-0d4f-48b3-b6a4-60681f5f7055"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="0" width="75" height="30" uuid="42c909f4-e5fa-4753-9bc9-f7321c9fc10d"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cep}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="30" width="555" height="30" uuid="d5d896e5-871b-4118-ac95-23eb0b4dd892"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(
+	(java.util.List<br.edu.ifsul.modelo.Recurso>)$F{condominio_recurso}
+) ]]></dataSourceExpression>
+				<subreportExpression><![CDATA["recursos.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="60" width="555" height="30" uuid="c0e5944e-c357-400f-be16-aecc47df2f62"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource(
+	(java.util.List<br.edu.ifsul.modelo.UnidadeCondominial>)$F{unidadeCondominial}
+) ]]></dataSourceExpression>
+				<subreportExpression><![CDATA["unidadeCondominial.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="58" splitType="Stretch">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="10" y="14" width="100" height="30" uuid="8e333fc6-b4eb-415f-a560-413c7463ea44"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="330" y="14" width="100" height="30" uuid="f57ded13-6cb7-4331-91a6-09c25cfedd2c"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="430" y="14" width="100" height="30" uuid="e5681b92-bf56-4801-8be1-1c1fb37f7e47"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

@@ -3,54 +3,285 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-   
-        
-        
-         <ui:composition template="/templates/template.xhtml">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+
+    <ui:composition template="/templates/template.xhtml">
         <ui:define name="titulo">Listagem de Condominios</ui:define>
         <ui:define name="conteudo">
+
+            <h:form id="formListagem">
+                <p:messages/>
+                <p:growl/>
+                <p:commandButton value="Novo" icon="ui-icon-plus"
+                                 actionListener="#{controleCondominio.novo()}"
+                                 update=":formEdicao" process="@this"
+                                 oncomplete="PF('dlg').show();"/>
+                <div align="center">
+                    <p:panelGrid columns="11">
+                        <p:outputLabel value="Order:" />
+                        <p:selectOneMenu id="ordem" value="#{controleCondominio.dao.ordem}">
+                            <f:selectItem itemLabel="ID" itemValue="id"/>
+                            <f:selectItem itemLabel="Nome" itemValue="nome"/>
+
+                            <p:ajax update="listagem"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Filtro"/>
+                        <p:inputText value="#{controleCondominio.dao.filtro}"
+                                     size="20"/>
+                        <p:commandButton value="Filtar" update="listagem"
+                                         icon="ui-icon-search"/>   
+                        <p:outputLabel value="Máximo de objetos:"/>
+                        <p:inputNumber value="#{controleCondominio.dao.maximoObjeto}" size="5"
+                                       decimalPlaces="0" decimalSeparator=""
+                                       thousandSeparator=""/>
+                        <p:commandButton actionListener="#{controleCondominio.dao.primeiro()}"
+                                         update="listagem" icon="ui-icon-seek-first"/>
+                        <p:commandButton actionListener="#{controleCondominio.dao.anterior()}"
+                                         update="listagem" icon="ui-icon-seek-prev"/>
+                        <p:commandButton actionListener="#{controleCondominio.dao.proximo()}"
+                                         update="listagem" icon="ui-icon-seek-next"/>
+                        <p:commandButton actionListener="#{controleCondominio.dao.ultimo()}"
+                                         update="listagem" icon="ui-icon-seek-end"/>
+                    </p:panelGrid>
+                </div>
+                <p:dataTable value="#{controleCondominio.dao.listaObjetos}" var="obj" id="listagem">
+                    <f:facet name="footer">
+                        <div align="center">
+                            <p:outputLabel value="#{controleCondominio.dao.mensagemNavegacao}"/>
+                        </div>
+                    </f:facet>
+                    <p:column headerText="ID">
+                        <p:outputLabel value="#{obj.id}"/>
+                    </p:column>
+
+                    <p:column headerText="Nome">
+                        <p:outputLabel value="#{obj.nome}"/>
+                    </p:column>
+                    <p:column headerText="Endereço">
+                        <p:outputLabel value="#{obj.endereco}"/>
+                    </p:column> 
+                    <p:column headerText="Número">
+                        <p:outputLabel value="#{obj.numero}"/>
+                    </p:column> 
+                    <p:column headerText="CEP">
+                        <p:outputLabel value="#{obj.cep}"/>
+                    </p:column> 
+
+                    <p:column headerText="Ações">
+                        <div align="center">
+                            <p:commandButton action="#{controleCondominio.imprimeCondominios(obj.id)}"
+                                             ajax="false" onclick="this.form.target='_blank';"
+                                             icon="ui-icon-print"/>
+                            <p:commandButton icon="ui-icon-pencil"
+                                             actionListener="#{controleCondominio.editar(obj.id)}"
+                                             title="Editar" 
+                                             update=":formEdicao" process="@this"
+                                             oncomplete="PF('dlg').show();"/>
+                            <p:commandButton icon="ui-icon-trash" title="Remover"
+                                             actionListener="#{controleCondominio.remover(obj.id)}"
+                                             update="@form" process="@this"
+                                             onclick="if (!confirm('Confirma a exclusão?'))
+                                                         return false"/>
+                        </div>
+                    </p:column>
+                </p:dataTable>
+
+
+            </h:form>
+        </ui:define>
+        <ui:define name="dialogos">
+            <p:dialog header="Edição" widgetVar="dlg" resizable="false" modal="true"
+                      width="750" height="480">  
+                <h:form id="formEdicao">
+                    <p:growl id="growl"/>
+                    <p:tabView id="tab">
+                        <p:tab title="Dados Principais">
+                            <div align="center">
+                                <p:panelGrid columns="2">
+                                    <p:outputLabel value="ID"/>
+                                    <p:inputText value="#{controleCondominio.objeto.id}"
+                                                 size="5" readonly="true"/>
+
+                                    <p:outputLabel value="Nome" for="txtNome"/>
+                                    <p:inputText id="txtNome"
+                                                 value="#{controleCondominio.objeto.nome}"
+                                                 size="50" maxlength="50"
+                                                 placeholder="Obrigatório"/>
+
+                                    <p:outputLabel value="Endereço" for="txtEndereco"/>
+                                    <p:inputText id="txtEndereco"
+                                                 value="#{controleCondominio.objeto.endereco}"
+                                                 size="50" maxlength="50"
+                                                 placeholder="Obrigatório"/>   
+                                    <p:outputLabel value="Número" for="txtNumero"/>
+                                    <p:inputText id="txtNumero"
+                                                 value="#{controleCondominio.objeto.numero}"
+                                                 size="50" maxlength="50"
+                                                 placeholder="Obrigatório"/>   
+
+                                    <p:outputLabel value="CEP" for="txtCEP"/>
+                                    <p:inputMask id="txtCEP"
+                                                 value="#{controleCondominio.objeto.cep}"
+                                                 mask="99999-999"   size="10" />
+
+                                </p:panelGrid>
+                            </div>
+                        </p:tab>
+                        
+                        <p:tab title="Unidade Condominial">
+                            <p:dataTable value="#{controleCondominio.objeto.unidadeCondominial}"
+                                         var="uni" rowIndexVar="idx" id="listaUinidadeCondominial">
+                                <f:facet name="header">
+                                    <p:commandButton value="Nova Unidade Condomial"
+                                                     actionListener="#{controleCondominio.novoUnidadeCondominial()}"
+                                                     update=":formUnidadeCondominial" process="@this"
+                                                     oncomplete="PF('dlgUnidadeCondominial').show();"
+                                                     icon="ui-icon-plus"/>
+                                </f:facet>
+
+                                <p:column headerText="Numero">
+                                    <p:outputLabel value="#{uni.numero}"/>
+
+                                </p:column>
+
+                                <p:column headerText="Area">
+                                    <p:outputLabel value="#{uni.area}"/>                                  
+                                </p:column>
+                                
+                                <p:column headerText="Número de Quartos">
+                                    <p:outputLabel value="#{uni.numeroQuarto}"/>                                  
+                                </p:column>
+
+                                <p:column headerText="Ações">
+                                    <div align="center">
+                                        <p:commandButton icon="ui-icon-pencil"
+                                                         actionListener="#{controleCondominio.alterarUnidadeCondominial(idx)}"
+                                                         update=":formUnidadeCondominial" process="@this"
+                                                        oncomplete="PF('dlgUnidadeCondominial').show();"/>
+                                        <p:commandButton icon="ui-icon-trash"
+                                                         actionListener="#{controleCondominio.RemoverUnidadeCondominial(idx)}"
+                                                         update="listaUinidadeCondominial :formEdicao:growl"
+                                                         process="@this"/>
+                                    </div>
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:tab>
+                              
+                        <p:tab title="Recursos">
+                            <p:dataTable value="#{controleCondominio.objeto.condominio_recurso}"
+                                         var="des" rowIndexVar="idxDes" id="listaRecursos">
+                                <f:facet name="header">
+                                    <p:panelGrid columns="3">
+                                        <p:outputLabel value="Recurso"/>
+                                        <p:selectOneMenu value="#{controleCondominio.recurso}"
+                                                         id="selectRecurso">
+                                            <f:converter converterId="converterRecurso"/>
+                                            <f:selectItem noSelectionOption="true"
+                                                          itemLabel="Selecione um registro"/>
+                                            <f:selectItems value="#{controleCondominio.daoRecurso.listaTodos}"
+                                                           var="recur"
+                                                           itemLabel="#{recur.descricao} "/>
+
+                                        </p:selectOneMenu>
+
+                                        <p:commandButton value="Adicionar"
+                                                         actionListener="#{controleCondominio.adicionarRecurso()}"
+                                                         update="listaRecursos :formEdicao:growl"
+                                                         id="btnAdicionarRecurso"
+                                                         process="btnAdicionarRecurso selectRecurso"
+                                                         icon="ui-icon-plus"/>
+                                    </p:panelGrid>
+                                </f:facet>
+                                <p:column headerText="Recurso">
+                                    <p:outputLabel value="#{des.descricao}"/>
+
+                                </p:column>
+
+                               
+
+                                <p:column headerText="Ações">
+                                    <div align="center">
+                                        <p:commandButton icon="ui-icon-trash"
+                                                         actionListener="#{controleCondominio.removerRecurso(idxDes)}"
+                                                         process="@this" update="listaRecursos :formEdicao:growl"/>
+
+                                    </div>                             
+                                </p:column>
+
+                            </p:dataTable>
+                        </p:tab>
+
+                             
+                    </p:tabView>
+                    
+                   
+                    <p:panel>
+                        <div align="center">
+                            <p:commandButton value="Salvar"
+                                             actionListener="#{controleCondominio.salvar()}"
+                                             update=":formListagem formEdicao"
+                                             icon="ui-icon-disk"
+                                             oncomplete="if (!args.validationFailed) {PF('dlg').hide();}"/>
+                        </div>
+                    </p:panel>
+                    <ui:include src="/templates/ajaxstatus.xhtml"/>
+                </h:form>
+            </p:dialog>
             
-             <h:form>
-           
-            <p:growl/>
-            <p:commandButton value="Novo" icon="ui-icon-plus"
-                             action="#{controleCondominio.novo()}" ajax="false"/>
-            <p:dataTable value="#{controleCondominio.dao.lista}" var="obj">
-              
-                <p:column headerText="ID">
-                    <p:outputLabel value="#{obj.id}"/>
-                </p:column>
-               
-                <p:column headerText="Nome">
-                    <p:outputLabel value="#{obj.nome}"/>
-                </p:column>
-                <p:column headerText="Endereço">
-                    <p:outputLabel value="#{obj.endereco}"/>
-                </p:column> 
-                 <p:column headerText="Número">
-                     <p:outputLabel value="#{obj.numero}"/>
-                </p:column> 
-                 <p:column headerText="CEP">
-                     <p:outputLabel value="#{obj.cep}"/>
-                </p:column> 
-                <p:column headerText="Ações">
-                    <div align="center">
-                        <p:commandButton icon="ui-icon-pencil"
-                                         action="#{controleCondominio.editar(obj.id)}"
-                                         title="Editar" ajax="false"/>
-                        <p:commandButton icon="ui-icon-trash" title="Remover"
-                                         action="#{controleCondominio.remover(obj.id)}"
-                                         update="@form" process="@form"
-                                         onclick="if (!confirm('Confirma a exclusão?')) return false"/>
-                    </div>
-                </p:column>
-            </p:dataTable>
+            <p:dialog widgetVar="dlgUnidadeCondominial" resizable="false" modal="true"
+                      header="Edição de Unidade Condominial">
+                
+                
+                <h:form id="formUnidadeCondominial">
+                    <p:growl/>
+                    <p:panelGrid columns="2">
+                        <f:facet name="footer">
+                            <div align="center">
+                                <p:commandButton value="Salvar Unidade Condominial" icon="ui-icon-disk"
+                                                 actionListener="#{controleCondominio.salvarUnidadeCondominial()}"
+                                                 update=":formEdicao:tab:listaUinidadeCondominial formUnidadeCondominial"
+                                                 process="@form"
+                                                 oncomplete="if(!args.validationFailed) {PF('dlgUnidadeCondominial').hide();}"/>
+                            </div>
+                        </f:facet>
+
+                        <p:outputLabel value="Número"/>
+                        <p:inputText  value="#{controleCondominio.unidadeCondominial.numero}"
+                                      size="20" maxlength="20"/>
+                        
+                        <p:outputLabel value="Descrição"/>
+                         <p:textEditor id="txtDescricao" value="#{controleCondominio.unidadeCondominial.descricao}" height="300" />
             
+                        <p:outputLabel value="Area"/>
+                        <p:inputNumber value="#{controleCondominio.unidadeCondominial.area}"
+                               id="txtArea" placeholder="Obrigatório"
+                               decimalSeparator="." thousandSeparator="" decimalPlaces="2"   />
+                        <p:outputLabel value="Número de Quartos"/>
+                        <p:inputNumber value="#{controleCondominio.unidadeCondominial.numeroQuarto}"
+                               id="txtQuartos" placeholder="Obrigatório"
+                               decimalSeparator="." thousandSeparator="" decimalPlaces="2"   />
+                        <p:selectOneMenu value="#{controleCondominio.unidadeCondominial.pessoa}"
+                                                         id="selectPessoa">
+                                            <f:converter converterId="converterPessoa"/>
+                                            <f:selectItem noSelectionOption="true"
+                                                          itemLabel="Selecione um registro"/>
+                                            <f:selectItems value="#{controleCondominio.daoPessoa.listaTodos}"
+                                                           var="pess"
+                                                           itemLabel="#{pess.nome} "/>
+
+                                        </p:selectOneMenu>
+                    </p:panelGrid>
+
+                </h:form>  
+                
+            </p:dialog>
             
-             </h:form>
         </ui:define>
     </ui:composition>
-          
+
 </html>
 

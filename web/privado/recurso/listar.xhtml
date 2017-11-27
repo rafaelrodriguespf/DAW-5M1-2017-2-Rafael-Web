@@ -16,7 +16,7 @@
             <p:growl/>
             <p:commandButton value="Novo" icon="ui-icon-plus"
                              action="#{controleRecurso.novo()}" ajax="false"/>
-            <p:dataTable value="#{controleRecurso.dao.lista}" var="obj">
+            <p:dataTable value="#{controleRecurso.dao.listaTodos}" var="obj">
               
                 <p:column headerText="ID">
                     <p:outputLabel value="#{obj.id}"/>

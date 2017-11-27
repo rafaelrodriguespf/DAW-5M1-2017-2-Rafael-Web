@@ -1,5 +1,5 @@
 package br.edu.ifsul.controle;
-import br.edu.ifsul.dao.PessoaDAO;
+import br.edu.ifsul.dao.PessoaDAObkp;
 import br.edu.ifsul.modelo.Pessoa;
 import br.edu.ifsul.util.Util;
 import java.io.Serializable;
@@ -16,11 +16,11 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class ControlePessoa implements Serializable {
 
-    private PessoaDAO dao;
+    private PessoaDAObkp dao;
     private Pessoa objeto;
     
     public ControlePessoa(){
-        dao = new PessoaDAO();
+        dao = new PessoaDAObkp();
     }
     
     public String listar(){
@@ -64,11 +64,11 @@ public class ControlePessoa implements Serializable {
         }
     }
 
-    public PessoaDAO getDao() {
+    public PessoaDAObkp getDao() {
         return dao;
     }
 
-    public void setDao(PessoaDAO dao) {
+    public void setDao(PessoaDAObkp dao) {
         this.dao = dao;
     }
 
